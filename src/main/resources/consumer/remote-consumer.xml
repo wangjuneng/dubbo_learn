@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 消费方应用名 用于计算依赖关系 不是匹配条件 不要与服务提供方一致 -->
+	<dubbo:application name="hello-consumer-app" />
+
+	<!-- 使用广播注册中心发现服务地址 -->
+	<dubbo:registry address="multicast://224.5.6.7:1324"></dubbo:registry>
+
+	<dubbo:reference id="helloService"
+		interface="com.ztesoft.zsmart.rpc.base.HelloRpc"></dubbo:reference>
+	<bean id="helloAction" class="com.ztesoft.zsmart.rpc.consumer.HelloConsume">
+		<property name="helloRpc" ref="helloService"></property>
+	</bean>
+</beans>
